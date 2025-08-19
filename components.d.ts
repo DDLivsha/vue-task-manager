@@ -8,8 +8,11 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    copy: typeof import('./src/components/CustomInput copy.vue')['default']
     CustomInput: typeof import('./src/components/CustomInput.vue')['default']
     CustomSelect: typeof import('./src/components/CustomSelect.vue')['default']
+    CustomTextArea: typeof import('./src/components/CustomTextArea.vue')['default']
+    NewProjectModal: typeof import('./src/components/NewProjectModal.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SortButtons: typeof import('./src/components/SortButtons.vue')['default']

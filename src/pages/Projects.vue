@@ -1,12 +1,13 @@
 <script setup lang="ts">
    import { useRouter } from 'vue-router';
    import { useProjectsStore } from '../stores/projects';
-   import { ref } from 'vue';
+   import { ref, watch } from 'vue';
    import SortButtons from '../components/SortButtons.vue';
    import CustomInput from '../components/CustomInput.vue';
    import debounce from 'lodash/debounce';
    import { motion } from 'motion-v'
    import CustomSelect from '../components/CustomSelect.vue';
+   import NewProjectModal from '../components/NewProjectModal.vue';
 
    //===============STORE==================
    const { projects } = useProjectsStore()
@@ -24,11 +25,31 @@
    //===============SEARCH SORT FILTER==================
    const sortBy = ref('id')
    const status = ref('')
+   const localSearch = ref('')
    const search = ref('')
+
+   watch(() => localSearch.value, debounce(() => {
+      search.value = localSearch.value
+   }, 500))
 
    const handleSortBy = (value: string) => {
       sortBy.value = value
    }
+   //==============NEW PROJECT MODAL=====================
+   const isOpen = ref(false)
+   const isNeedUpdate = ref(false)
+   const toggleModal = () => {
+      isOpen.value = !isOpen.value
+   }
+   const toggleUpdate = () => {
+      isNeedUpdate.value = !isNeedUpdate.value
+   }
+
+   watch(() => isNeedUpdate.value, (newVal) => {
+      if (newVal) {
+         alert('Project updated successfully')
+      }
+   })
 </script>
 
 <template>
@@ -36,7 +57,7 @@
       <h2 class="projects__title">My Projects</h2>
       <div class="projects__search">
          <CustomInput
-            v-model="search"
+            v-model="localSearch"
             placeholder="Search..."
          />
          <CustomSelect
@@ -49,6 +70,7 @@
             class="btn"
             :whileHover="{ scale: 1.05 }"
             :whilePress="{ scale: 0.95 }"
+            @click="toggleModal"
          >New Project</motion.button>
       </div>
    </div>
@@ -127,6 +149,11 @@
          </tbody>
       </table>
    </div>
+   <NewProjectModal
+      :isOpen="isOpen"
+      @toggleModal="toggleModal"
+      @updateTable="toggleUpdate"
+   />
 </template>
 
 <style scoped lang="scss">
@@ -143,7 +170,7 @@
          gap: 8px;
          flex: 1;
          max-width: 600px;
-         align-items: center; 
+         align-items: center;
       }
 
       &__title {
