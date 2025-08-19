@@ -74,7 +74,7 @@
 
       &.--active {
          path {
-            fill: #EE2835;
+            fill: red;
          }
       }
 
