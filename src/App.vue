@@ -2,8 +2,16 @@
 </script>
 
 <template>
-   <h1></h1>
-   <router-view></router-view>
+   <div class="container">
+      <router-view></router-view>
+   </div>
 </template>
 
-<style scoped></style>
+<style scoped lang="scss">
+   .container {
+      max-width: 1300px;
+      margin: 0 auto;
+      margin-top: 20px;
+      padding: 0 16px;
+   }
+</style>

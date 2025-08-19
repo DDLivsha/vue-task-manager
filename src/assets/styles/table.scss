@@ -1,4 +1,4 @@
-.globalTable {
+.table {
    &__block-overflow {
       overflow-x: auto;
       width: 100%;
@@ -23,6 +23,16 @@
       }
    }
 
+   &__header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      justify-content: center;
+   }
+   &__status {
+      text-transform: capitalize;
+   }
+
    &__table {
       width: 100%;
       background-color: #FFF;
@@ -30,39 +40,35 @@
       border-radius: 4px;
       min-width: 800px;
       table-layout: auto;
-
       tbody {
          tr {
             background-color: #FFF;
+            cursor: pointer;
             &:last-child {
                border-right: 1px solid #D9D9D9;
             }
          }
       }
-
       th,
       td {
          padding: 6px 10px;
-         text-align: left;
+         text-align: center;
          color: #3E3A3B;
-         font-size: 16px;
-         max-width: 190px;
          min-width: 50px;
          word-break: keep-all;
          font-weight: 400;
          overflow-wrap: break-word;
+         border: 1px solid #D9D9D9;
       }
 
       tr {
-         border-bottom: 1px solid #D9D9D9;
-         border-top: 1px solid #D9D9D9;
-         height: 67px;
+         border: 1px solid #D9D9D9;
+         height: 50px;
       }
 
       th {
          white-space: nowrap;
          background-color: #F4F4F4;
-         border-right: 1px solid #D9D9D9;
          font-size: 18px;
       }
    }

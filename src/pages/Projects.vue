@@ -1,34 +1,70 @@
 <script setup lang="ts">
-   import SortButtons from '../components/SortButtons.vue';
+   import { useRouter } from 'vue-router';
+   import { useProjectsStore } from '../stores/projects';
+   const { projects } = useProjectsStore()
+
+   const router = useRouter()
+
+   const handleClick = (event: MouseEvent, path: string) => {
+
+      if (event.ctrlKey || event.metaKey || event.button === 1) {
+         window.open(path, '_blank')
+         return
+      }
+
+      router.push(path)
+   }
 </script>
 
 <template>
-   <div className="globalTable__block-overflow">
-      <table className="globalTable__table ">
+   <div className="table__block-overflow">
+      <table className="table__table">
          <thead>
             <tr>
                <th>
-                  <div className='main__sorting-box'>Name
-                     <SortButtons />
+                  <div className='table__header'>Id
+                     <!-- <SortButtons /> -->
                   </div>
                </th>
-               <th>Email</th>
-               <th>Phone</th>
+               <th>
+                  <div className='table__header'>Project Title
+                     <!-- <SortButtons /> -->
+                  </div>
+               </th>
+               <th>
+                  <div className='table__header'>Tasks Quantity
+                     <!-- <SortButtons /> -->
+                  </div>
+               </th>
+               <th>
+                  <div className='table__header'>Status
+                     <!-- <SortButtons /> -->
+                  </div>
+               </th>
             </tr>
          </thead>
          <tbody>
-            <tr>
+            <tr
+               v-for="item in projects"
+               :key="item.id"
+               v-if="projects.length"
+               :to="'/' + item.id"
+               @click.prevent="handleClick($event, '/' + item.id)"
+            >
                <td>
-                  sadfsadf
+                  {{ item.id }}
                </td>
                <td>
-                  sadfsadf
+                  {{ item.title }}
                </td>
                <td>
-                  sadfsadf
+                  {{ item.tasks_quantity }}
+               </td>
+               <td class='table__status'>
+                  {{ item.status }}
                </td>
             </tr>
-            <tr>
+            <tr v-else>
                <td></td>
                <td>No data available.</td>
                <td></td>
