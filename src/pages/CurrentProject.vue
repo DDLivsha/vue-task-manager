@@ -80,7 +80,7 @@
       </div>
    </div>
 
-   <TasksTables />
+   <TasksTables v-if="project" />
    <NewTaskModal
       :isOpen="isOpen"
       @toggleModal="toggleModal"
