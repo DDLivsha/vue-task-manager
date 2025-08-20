@@ -18,8 +18,8 @@
 </script>
 
 <template>
-   <div className='inline-block'>
-      <div className='sorting__box'>
+   <div class='inline-block'>
+      <div class='sorting__box'>
          <svg
             width="14"
             height="8"

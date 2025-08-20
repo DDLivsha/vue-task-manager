@@ -90,7 +90,13 @@
             v-model="data.description"
             placeholder="Description"
          />
-         <button @click="handleCreateProject" class="btn">Create Project</button>
+         <motion.button
+            type="button"
+            class="btn"
+            :whileHover="{ scale: 1.05 }"
+            :whilePress="{ scale: 0.95 }"
+            @click="handleCreateProject"
+         >Create Project</motion.button>
       </motion.div>
    </AnimatePresence>
 </template>

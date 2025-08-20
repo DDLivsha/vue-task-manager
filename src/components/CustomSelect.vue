@@ -58,6 +58,12 @@
          class="select__options"
       >
          <li
+            @click="select('')"
+            class="select__option placeholder"
+         >
+            Clear filter
+         </li>
+         <li
             v-for="option in options"
             :key="option"
             @click="select(option)"

@@ -1,19 +1,23 @@
 <script setup lang="ts">
    import { useRouter } from 'vue-router';
    import { useProjectsStore } from '../stores/projects';
-   import { ref, watch } from 'vue';
+   import { onMounted, ref, watch } from 'vue';
    import SortButtons from '../components/SortButtons.vue';
    import CustomInput from '../components/CustomInput.vue';
    import debounce from 'lodash/debounce';
    import { motion } from 'motion-v'
    import CustomSelect from '../components/CustomSelect.vue';
    import NewProjectModal from '../components/NewProjectModal.vue';
+   import { storeToRefs } from 'pinia'
 
    //===============STORE==================
-   const { projects } = useProjectsStore()
+   const store = useProjectsStore()
+   const { projects } = storeToRefs(store)
+   const { fetchAllProjects } = useProjectsStore()
 
    //============ROUTER FOR OPEN PROJECT===============
    const router = useRouter()
+
    const handleClick = (event: MouseEvent, path: string) => {
       if (event.ctrlKey || event.metaKey || event.button === 1) {
          window.open(path, '_blank')
@@ -35,6 +39,11 @@
    const handleSortBy = (value: string) => {
       sortBy.value = value
    }
+
+   watch([sortBy, status, search], async () => {
+      await fetchAllProjects(sortBy.value, status.value, search.value);
+   }, { immediate: true });
+
    //==============NEW PROJECT MODAL=====================
    const isOpen = ref(false)
    const isNeedUpdate = ref(false)
@@ -74,12 +83,12 @@
          >New Project</motion.button>
       </div>
    </div>
-   <div className="table__block-overflow">
-      <table className="table__table">
+   <div class="table__block-overflow">
+      <table class="table__table">
          <thead>
             <tr>
                <th>
-                  <div className='table__header'>Id
+                  <div class='table__header'>Id
                      <SortButtons
                         :currentValue="sortBy"
                         :ascValue="'id'"
@@ -89,7 +98,7 @@
                   </div>
                </th>
                <th>
-                  <div className='table__header'>Project Title
+                  <div class='table__header'>Project Title
                      <SortButtons
                         :currentValue="sortBy"
                         :ascValue="'title'"
@@ -99,7 +108,7 @@
                   </div>
                </th>
                <th>
-                  <div className='table__header'>Tasks Quantity
+                  <div class='table__header'>Tasks Quantity
                      <SortButtons
                         :currentValue="sortBy"
                         :ascValue="'tasks_quantity'"
@@ -109,7 +118,7 @@
                   </div>
                </th>
                <th>
-                  <div className='table__header'>Status
+                  <div class='table__header'>Status
                      <SortButtons
                         :currentValue="sortBy"
                         :ascValue="'status'"
@@ -141,13 +150,12 @@
                   {{ item.status }}
                </td>
             </tr>
-            <tr v-else>
-               <td></td>
-               <td>No data available.</td>
-               <td></td>
-            </tr>
          </tbody>
       </table>
+      <div
+         v-if="!projects.length"
+         class="table__no-data"
+      >No data available.</div>
    </div>
    <NewProjectModal
       :isOpen="isOpen"

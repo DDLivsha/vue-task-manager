@@ -33,6 +33,13 @@
       text-transform: capitalize;
    }
 
+   &__no-data {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px 0;
+   }
+
    &__table {
       width: 100%;
       background-color: #FFF;
