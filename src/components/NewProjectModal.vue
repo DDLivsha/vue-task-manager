@@ -4,6 +4,7 @@
    import type { ProjectProps } from '../interfaces/project';
    import CustomInput from './CustomInput.vue';
    import CustomTextArea from './CustomTextArea.vue';
+   import { useProjectsStore } from '../stores/projects';
 
    const props = defineProps<{
       isOpen: boolean,
@@ -12,6 +13,8 @@
       (e: 'toggleModal'): void;
       (e: 'updateTable'): void
    }>()
+
+   const { createProject } = useProjectsStore()
 
    //==============HANDLE OVERLAY=====================
    watch(() => props.isOpen, (newVal) => {
@@ -42,14 +45,23 @@
       data.description = ''
    }
 
-   const handleCreateProject = () => {
-      if (!data.title) {
-         isError.value = true
-         return
+   const handleCreateProject = async () => {
+      try {
+         data.title = data.title.trim();
+         data.description = data.description.trim();
+
+         if (!data.title) {
+            isError.value = true
+            return
+         } else {
+            await createProject(data)
+            alert('Project created successfully')
+            handleReset()
+            emit('updateTable')
+         }
+      } catch (error) {
+         console.error(error)
       }
-      alert('Project created successfully')
-      handleReset()
-      emit('updateTable')
    }
 
 </script>

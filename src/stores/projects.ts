@@ -40,5 +40,21 @@ export const useProjectsStore = defineStore('projects', () => {
       }
    }
 
-   return { projects, currentProject, fetchAllProjects }
+   const createProject = async (newProject: ProjectProps) => {
+      try {
+
+         const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/projects`, { ...newProject })
+
+      } catch (error) {
+         if (error instanceof Error) {
+            console.error(error?.message)
+            alert(error?.message)
+         } else {
+            console.error('Unexpected error', error)
+            alert('An unexpected error occurred')
+         }
+      }
+   }
+
+   return { projects, currentProject, fetchAllProjects, createProject }
 })

@@ -1,14 +1,14 @@
 <script setup lang="ts">
    import { useRouter } from 'vue-router';
+   import { ref, watch } from 'vue';
    import { useProjectsStore } from '../stores/projects';
-   import { onMounted, ref, watch } from 'vue';
    import SortButtons from '../components/SortButtons.vue';
    import CustomInput from '../components/CustomInput.vue';
-   import debounce from 'lodash/debounce';
-   import { motion } from 'motion-v'
    import CustomSelect from '../components/CustomSelect.vue';
    import NewProjectModal from '../components/NewProjectModal.vue';
    import { storeToRefs } from 'pinia'
+   import debounce from 'lodash/debounce';
+   import { motion } from 'motion-v'
 
    //===============STORE==================
    const store = useProjectsStore()
@@ -31,6 +31,11 @@
    const status = ref('')
    const localSearch = ref('')
    const search = ref('')
+   const isNeedUpdate = ref(false)
+
+   const toggleUpdate = () => {
+      isNeedUpdate.value = !isNeedUpdate.value
+   }
 
    watch(() => localSearch.value, debounce(() => {
       search.value = localSearch.value
@@ -40,25 +45,16 @@
       sortBy.value = value
    }
 
-   watch([sortBy, status, search], async () => {
+   watch([sortBy, status, search, isNeedUpdate], async () => {
       await fetchAllProjects(sortBy.value, status.value, search.value);
    }, { immediate: true });
 
    //==============NEW PROJECT MODAL=====================
    const isOpen = ref(false)
-   const isNeedUpdate = ref(false)
    const toggleModal = () => {
       isOpen.value = !isOpen.value
    }
-   const toggleUpdate = () => {
-      isNeedUpdate.value = !isNeedUpdate.value
-   }
 
-   watch(() => isNeedUpdate.value, (newVal) => {
-      if (newVal) {
-         alert('Project updated successfully')
-      }
-   })
 </script>
 
 <template>
