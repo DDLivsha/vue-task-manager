@@ -2,13 +2,12 @@
    import { useRoute } from 'vue-router';
    import { onMounted, ref } from 'vue';
    import { useCurrentProjectStore } from '../stores/currentProject';
-   import SortButtons from '../components/SortButtons.vue';
    import CustomSelect from '../components/CustomSelect.vue';
    import { storeToRefs } from 'pinia'
    import { motion } from 'motion-v'
-   import { format } from 'date-fns'
    import { executors } from '../constants/executors';
-import NewTaskModal from '../components/NewTaskModal.vue';
+   import NewTaskModal from '../components/NewTaskModal.vue';
+   import TasksTables from '../components/TasksTables.vue';
 
    //===============STORE==================
    const store = useCurrentProjectStore()
@@ -19,12 +18,7 @@ import NewTaskModal from '../components/NewTaskModal.vue';
    const projectId = useRoute().params.id
 
    //===============SEARCH SORT FILTER==================
-   const sortBy = ref('make_until')
    const name = ref('')
-
-   const handleSortBy = (value: string) => {
-      sortBy.value = value
-   }
 
    onMounted(() => {
       fetchCurrentProject(Number(projectId));
@@ -35,6 +29,7 @@ import NewTaskModal from '../components/NewTaskModal.vue';
    const toggleModal = () => {
       isOpen.value = !isOpen.value
    }
+
 </script>
 
 <template>
@@ -85,57 +80,7 @@ import NewTaskModal from '../components/NewTaskModal.vue';
       </div>
    </div>
 
-   <div class="table__block-overflow">
-      <table class="table__table">
-         <thead>
-            <tr>
-               <th>
-                  <div class='table__header'>Id</div>
-               </th>
-               <th>
-                  <div class='table__header'>Title</div>
-               </th>
-               <th>
-                  <div class='table__header'>Executor</div>
-               </th>
-               <th>
-                  <div class='table__header'>Make until
-                     <SortButtons
-                        :currentValue="sortBy"
-                        :ascValue="'make_until'"
-                        :descValue="'-make_until'"
-                        @change="handleSortBy"
-                     />
-                  </div>
-               </th>
-            </tr>
-         </thead>
-         <tbody>
-            <tr
-               v-for="item in project?.tasks.tasks_todo"
-               :key="item.id"
-               v-if="project?.tasks.tasks_todo.length"
-            >
-               <td>
-                  {{ item.id }}
-               </td>
-               <td>
-                  {{ item.title }}
-               </td>
-               <td>
-                  {{ item.executor }}
-               </td>
-               <td >
-                  {{ format(new Date(item.make_until), 'dd.MM.yyyy') }}
-               </td>
-            </tr>
-         </tbody>
-      </table>
-      <div
-         v-if="!project?.tasks.tasks_todo.length"
-         class="table__no-data"
-      >No data available.</div>
-   </div>
+   <TasksTables />
    <NewTaskModal
       :isOpen="isOpen"
       @toggleModal="toggleModal"
