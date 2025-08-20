@@ -19,17 +19,18 @@
       sortBy.value = value
    }
 
-   const onUpdate = async () => {
-      if (project.value) {
-         await changeProject(projectId, project.value);
-      }
-   };
+   const onTaskChange = async (event: any, newStatus: string) => {
+      if (event.added) {
+         const addedTask = event.added.element;
+         addedTask.status = newStatus;
 
-   const onAdd = async (newStatus: string, e: any) => {
-      const task = e.item.__vueParentComponent.props.element; 
-      task.status = newStatus;
-      if (project.value) {
-         await changeProject(projectId, project.value);
+         if (project.value) {
+            changeProject(projectId, project.value);
+         }
+      } else if (event.moved) {
+         if (project.value) {
+            changeProject(projectId, project.value);
+         }
       }
    };
 </script>
@@ -52,8 +53,7 @@
             group="tasks"
             item-key="id"
             tag="tbody"
-            @add="onAdd('to do', $event)"
-            @end="onUpdate"
+            @change="onTaskChange($event, 'to do')"
          >
             <template #item="{ element }">
                <tr>
@@ -88,8 +88,7 @@
             group="tasks"
             item-key="id"
             tag="tbody"
-            @add="onAdd('in progress', $event)"
-            @end="onUpdate"
+            @change="onTaskChange($event, 'in progress')"
          >
             <template #item="{ element }">
                <tr>
@@ -124,8 +123,7 @@
             group="tasks"
             item-key="id"
             tag="tbody"
-            @add="onAdd('done', $event)"
-            @end="onUpdate"
+            @change="onTaskChange($event, 'done')"
          >
             <template #item="{ element }">
                <tr>
