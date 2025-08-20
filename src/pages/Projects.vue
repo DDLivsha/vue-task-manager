@@ -9,6 +9,7 @@
    import { storeToRefs } from 'pinia'
    import debounce from 'lodash/debounce';
    import { motion } from 'motion-v'
+   import { format } from 'date-fns'
 
    //===============STORE==================
    const store = useProjectsStore()
@@ -54,7 +55,6 @@
    const toggleModal = () => {
       isOpen.value = !isOpen.value
    }
-
 </script>
 
 <template>
@@ -123,6 +123,9 @@
                      />
                   </div>
                </th>
+               <th>
+                  <div class='table__header'>Created At</div>
+               </th>
             </tr>
          </thead>
          <tbody>
@@ -144,6 +147,9 @@
                </td>
                <td class='table__status'>
                   {{ item.status }}
+               </td>
+               <td class='table__status'>
+                  {{ format(new Date(item.created_at), 'dd.MM.yyyy') }}
                </td>
             </tr>
          </tbody>

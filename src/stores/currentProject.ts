@@ -9,8 +9,9 @@ export interface FiltersProps {
    title?: string
 }
 
-export const useProjectsStore = defineStore('projects', () => {
+export const useCurrentProjectStore = defineStore('projects', () => {
    const projects = ref<ProjectProps[]>([])
+   const currentProject = ref<ProjectProps | null>(null)
 
    const fetchAllProjects = async (sortBy: string, status?: string, search?: string) => {
       try {
@@ -55,5 +56,5 @@ export const useProjectsStore = defineStore('projects', () => {
       }
    }
 
-   return { projects, fetchAllProjects, createProject }
+   return { projects, currentProject, fetchAllProjects, createProject }
 })

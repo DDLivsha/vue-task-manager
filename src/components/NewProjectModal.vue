@@ -49,7 +49,7 @@
       try {
          data.title = data.title.trim();
          data.description = data.description.trim();
-
+         data.created_at = new Date().toISOString();
          if (!data.title) {
             isError.value = true
             return
