@@ -7,6 +7,10 @@
    import draggable from 'vuedraggable';
    import { useRoute } from 'vue-router';
 
+   const props = defineProps<{
+      nameFilter: string;
+   }>();
+
    //===============STORE==================
    const store = useCurrentProjectStore()
    const { project } = storeToRefs(store)
@@ -19,6 +23,7 @@
       sortBy.value = value
    }
 
+   //===============DRAG AND DROP==================
    const onTaskChange = async (event: any, newStatus: string) => {
       if (event.added) {
          const addedTask = event.added.element;
@@ -45,7 +50,16 @@
                <th>Id</th>
                <th>Title</th>
                <th>Executor</th>
-               <th>Make until</th>
+               <th>
+                  <div class="table__header">Make until
+                     <SortButtons
+                        :currentValue="sortBy"
+                        :ascValue="'make_until'"
+                        :descValue="'-make_until'"
+                        @change="handleSortBy"
+                     />
+                  </div>
+               </th>
             </tr>
          </thead>
          <draggable
@@ -80,7 +94,16 @@
                <th>Id</th>
                <th>Title</th>
                <th>Executor</th>
-               <th>Make until</th>
+               <th>
+                  <div class="table__header">Make until
+                     <SortButtons
+                        :currentValue="sortBy"
+                        :ascValue="'make_until'"
+                        :descValue="'-make_until'"
+                        @change="handleSortBy"
+                     />
+                  </div>
+               </th>
             </tr>
          </thead>
          <draggable
@@ -115,7 +138,16 @@
                <th>Id</th>
                <th>Title</th>
                <th>Executor</th>
-               <th>Make until</th>
+               <th>
+                  <div class="table__header">Make until
+                     <SortButtons
+                        :currentValue="sortBy"
+                        :ascValue="'make_until'"
+                        :descValue="'-make_until'"
+                        @change="handleSortBy"
+                     />
+                  </div>
+               </th>
             </tr>
          </thead>
          <draggable

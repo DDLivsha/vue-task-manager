@@ -81,7 +81,7 @@
       </div>
    </div>
 
-   <TasksTables v-if="project" />
+   <TasksTables v-if="project" :nameFilter="name" />
    <NewTaskModal
       :isOpen="isOpen"
       @toggleModal="toggleModal"
