@@ -29,10 +29,9 @@ export const useCurrentProjectStore = defineStore('currentProject', () => {
          }
       }
    }
-   const changeProject = async (newProject: ProjectProps) => {
+   const changeProject = async (id: number, newProject: ProjectProps) => {
       try {
-
-         const { data } = await axios.put(`${import.meta.env.VITE_API_URL}/projects`, { ...newProject })
+         const { data } = await axios.put(`${import.meta.env.VITE_API_URL}/projects/${id}`, { ...newProject })
 
       } catch (error) {
          if (error instanceof Error) {
