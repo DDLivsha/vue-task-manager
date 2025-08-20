@@ -93,22 +93,33 @@
                class="close-modal"
             />
          </div>
-         <CustomInput
-            v-model="data.title"
-            placeholder="Title"
-            :error="(isError && !data.title) ? 'You need to add a title' : ''"
-         />
-         <CustomTextArea
-            v-model="data.description"
-            placeholder="Description"
-         />
-         <motion.button
-            type="button"
-            class="btn"
-            :whileHover="{ scale: 1.05 }"
-            :whilePress="{ scale: 0.95 }"
-            @click="handleCreateProject"
-         >Create Project</motion.button>
+         <div class="flex">
+            <CustomInput
+               v-model="data.title"
+               placeholder="Title"
+               :error="(isError && !data.title) ? 'You need to add a title' : ''"
+            />
+            <CustomTextArea
+               v-model="data.description"
+               placeholder="Description"
+            />
+            <motion.button
+               type="button"
+               class="btn"
+               :whileHover="{ scale: 1.05 }"
+               :whilePress="{ scale: 0.95 }"
+               @click="handleCreateProject"
+            >Create Project</motion.button>
+         </div>
+         <div></div>
       </motion.div>
    </AnimatePresence>
 </template>
+
+<style scoped lang="scss">
+   .flex {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+   }
+</style>

@@ -1,27 +1,15 @@
 <script setup lang="ts">
-   import { ref } from 'vue';
    import { useCurrentProjectStore } from '../stores/currentProject';
-   import SortButtons from '../components/SortButtons.vue';
    import { storeToRefs } from 'pinia'
    import { format } from 'date-fns'
    import draggable from 'vuedraggable';
    import { useRoute } from 'vue-router';
-
-   const props = defineProps<{
-      nameFilter: string;
-   }>();
 
    //===============STORE==================
    const store = useCurrentProjectStore()
    const { project } = storeToRefs(store)
    const { changeProject } = useCurrentProjectStore()
    const projectId = Number(useRoute().params.id);
-
-   //===============SEARCH SORT FILTER==================
-   const sortBy = ref('make_until')
-   const handleSortBy = (value: string) => {
-      sortBy.value = value
-   }
 
    //===============DRAG AND DROP==================
    const onTaskChange = async (event: any, newStatus: string) => {
@@ -50,16 +38,7 @@
                <th>Id</th>
                <th>Title</th>
                <th>Executor</th>
-               <th>
-                  <div class="table__header">Make until
-                     <SortButtons
-                        :currentValue="sortBy"
-                        :ascValue="'make_until'"
-                        :descValue="'-make_until'"
-                        @change="handleSortBy"
-                     />
-                  </div>
-               </th>
+               <th>Make until</th>
             </tr>
          </thead>
          <draggable
@@ -94,16 +73,7 @@
                <th>Id</th>
                <th>Title</th>
                <th>Executor</th>
-               <th>
-                  <div class="table__header">Make until
-                     <SortButtons
-                        :currentValue="sortBy"
-                        :ascValue="'make_until'"
-                        :descValue="'-make_until'"
-                        @change="handleSortBy"
-                     />
-                  </div>
-               </th>
+               <th>Make until</th>
             </tr>
          </thead>
          <draggable
@@ -138,16 +108,7 @@
                <th>Id</th>
                <th>Title</th>
                <th>Executor</th>
-               <th>
-                  <div class="table__header">Make until
-                     <SortButtons
-                        :currentValue="sortBy"
-                        :ascValue="'make_until'"
-                        :descValue="'-make_until'"
-                        @change="handleSortBy"
-                     />
-                  </div>
-               </th>
+               <th>Make until</th>
             </tr>
          </thead>
          <draggable

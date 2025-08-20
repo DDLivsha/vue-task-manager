@@ -119,7 +119,7 @@
                class="close-modal"
             />
          </div>
-         <div class="grid">
+         <div class="flex">
             <CustomInput
                v-model="data.title"
                placeholder="Title"
@@ -151,18 +151,15 @@
                @click="handleCreateTask"
             >Create Task</motion.button>
          </div>
+         <div></div>
       </motion.div>
    </AnimatePresence>
 </template>
 
 <style scoped lang="scss">
-   .grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
+   .flex {
+      display: flex;
+      flex-direction: column;
       gap: 16px;
-
-      @media (max-width: 600px) {
-         grid-template-columns: 1fr;
-      }
    }
 </style>

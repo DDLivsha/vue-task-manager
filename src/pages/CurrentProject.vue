@@ -2,10 +2,8 @@
    import { useRoute } from 'vue-router';
    import { onMounted, ref } from 'vue';
    import { useCurrentProjectStore } from '../stores/currentProject';
-   import CustomSelect from '../components/CustomSelect.vue';
    import { storeToRefs } from 'pinia'
    import { motion } from 'motion-v'
-   import { executors } from '../constants/executors';
    import NewTaskModal from '../components/NewTaskModal.vue';
    import TasksTables from '../components/TasksTables.vue';
 
@@ -18,8 +16,6 @@
    const projectId = useRoute().params.id
 
    //===============SEARCH SORT FILTER==================
-   const name = ref('')
-
    onMounted(() => {
       fetchCurrentProject(Number(projectId));
    })
@@ -65,12 +61,6 @@
       </div>
       <div class="projects__search">
          <div class="filler"></div>
-         <CustomSelect
-            v-model="name"
-            :options="executors"
-            placeholder="Filter by executor"
-            class="max-w"
-         />
          <motion.button
             type="button"
             class="btn"
@@ -81,7 +71,7 @@
       </div>
    </div>
 
-   <TasksTables v-if="project" :nameFilter="name" />
+   <TasksTables v-if="project" />
    <NewTaskModal
       :isOpen="isOpen"
       @toggleModal="toggleModal"
@@ -95,9 +85,5 @@
 
    .filler {
       flex-grow: 1;
-   }
-
-   .max-w {
-      max-width: 250px;
    }
 </style>

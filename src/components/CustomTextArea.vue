@@ -41,6 +41,7 @@
          @input="emit('update:modelValue', internalValue)"
          @blur="emit('blur')"
          @focus="emit('focus')"
+         class="min-h"
       />
       <p
          v-if="props.error"
@@ -77,5 +78,9 @@
       color: red;
       font-size: 12px;
       margin-top: 4px;
+   }
+
+   .min-h {
+      min-height: 130px;
    }
 </style>
