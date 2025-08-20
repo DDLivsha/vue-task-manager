@@ -29,6 +29,7 @@
    >
       <div
          class="select__box"
+         :class="{ '--error': !!error }"
          @click="toggle"
       >
          <span v-if="modelValue">{{ modelValue }}</span>
@@ -61,7 +62,7 @@
             @click="select('')"
             class="select__option placeholder"
          >
-            Clear filter
+            Clear
          </li>
          <li
             v-for="option in options"
@@ -85,7 +86,6 @@
       position: relative;
       font-family: sans-serif;
       width: 100%;
-      max-width: 300px;
 
       &__box {
          border: 1px solid #ccc;
@@ -98,6 +98,10 @@
          align-items: center;
          height: 35px;
          text-transform: capitalize;
+
+         &.--error {
+            border-color: red;
+         }
 
          &:hover {
             border-color: #666;

@@ -69,6 +69,7 @@
             v-model="name"
             :options="executors"
             placeholder="Filter by executor"
+            class="max-w"
          />
          <motion.button
             type="button"
@@ -94,5 +95,9 @@
 
    .filler {
       flex-grow: 1;
+   }
+
+   .max-w {
+      max-width: 250px;
    }
 </style>
