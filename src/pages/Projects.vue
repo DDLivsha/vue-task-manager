@@ -133,7 +133,6 @@
                v-for="item in projects"
                :key="item.id"
                v-if="projects.length"
-               :to="'/' + item.id"
                @click.prevent="handleClick($event, '/' + item.id)"
             >
                <td>
@@ -165,27 +164,3 @@
       @updateTable="toggleUpdate"
    />
 </template>
-
-<style scoped lang="scss">
-   .projects {
-      &__header {
-         display: flex;
-         justify-content: space-between;
-         align-items: center;
-         margin-bottom: 20px;
-      }
-
-      &__search {
-         display: flex;
-         gap: 8px;
-         flex: 1;
-         max-width: 600px;
-         align-items: center;
-      }
-
-      &__title {
-         font-size: 24px;
-         font-weight: 600;
-      }
-   }
-</style>

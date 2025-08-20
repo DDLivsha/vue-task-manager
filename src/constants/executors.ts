@@ -1,0 +1,1 @@
+export const executors = ['Leonid Kuchma', 'Oleh Lyashko', 'Vitalii Klichko','Billy Herrington']

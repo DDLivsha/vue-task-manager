@@ -85,6 +85,7 @@
       position: relative;
       font-family: sans-serif;
       width: 100%;
+      max-width: 300px;
 
       &__box {
          border: 1px solid #ccc;

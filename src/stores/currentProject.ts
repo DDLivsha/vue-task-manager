@@ -9,25 +9,30 @@ export interface FiltersProps {
    title?: string
 }
 
-export const useCurrentProjectStore = defineStore('projects', () => {
-   const projects = ref<ProjectProps[]>([])
-   const currentProject = ref<ProjectProps | null>(null)
+export const useCurrentProjectStore = defineStore('currentProject', () => {
+   const project = ref<ProjectProps>()
 
-   const fetchAllProjects = async (sortBy: string, status?: string, search?: string) => {
+   const fetchCurrentProject = async (id: number) => {
       try {
-         const params: FiltersProps = { sortBy: sortBy }
 
-         if (search) {
-            params.title = `*${search}*`
+         const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/projects/${id}`)
+
+         project.value = data
+
+      } catch (error) {
+         if (error instanceof Error) {
+            console.error(error?.message)
+            alert(error?.message)
+         } else {
+            console.error('Unexpected error', error)
+            alert('An unexpected error occurred')
          }
+      }
+   }
+   const changeProject = async (newProject: ProjectProps) => {
+      try {
 
-         if (status) {
-            params.status = status
-         }
-
-         const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/projects`, { params })
-
-         projects.value = data
+         const { data } = await axios.put(`${import.meta.env.VITE_API_URL}/projects`, { ...newProject })
 
       } catch (error) {
          if (error instanceof Error) {
@@ -40,21 +45,5 @@ export const useCurrentProjectStore = defineStore('projects', () => {
       }
    }
 
-   const createProject = async (newProject: ProjectProps) => {
-      try {
-
-         const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/projects`, { ...newProject })
-
-      } catch (error) {
-         if (error instanceof Error) {
-            console.error(error?.message)
-            alert(error?.message)
-         } else {
-            console.error('Unexpected error', error)
-            alert('An unexpected error occurred')
-         }
-      }
-   }
-
-   return { projects, currentProject, fetchAllProjects, createProject }
+   return { project, fetchCurrentProject, changeProject }
 })
