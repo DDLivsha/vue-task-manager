@@ -9,6 +9,7 @@
    import { useRoute } from 'vue-router';
    import type { TaskProps } from '../interfaces/task';
    import { generateId } from '../helpers/generateId';
+   import { useToast } from 'vue-toastification'
 
    const props = defineProps<{
       isOpen: boolean,
@@ -79,7 +80,7 @@
                   project.value.tasks_quantity = project.value.tasks.tasks_todo.length + project.value.tasks.tasks_in_progress.length + project.value.tasks.tasks_done.length
 
                   await changeProject(projectId, project.value);
-                  alert('Project created successfully')
+                  useToast().success('Task created successfully')
                   handleReset()
                }
 
@@ -87,6 +88,7 @@
          }
       } catch (error) {
          console.error(error)
+         useToast().error('Something went wrong')
       }
    }
 

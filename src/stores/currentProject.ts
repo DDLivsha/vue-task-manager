@@ -2,6 +2,7 @@ import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import type { ProjectProps } from '../interfaces/project'
 import axios from 'axios'
+import { useToast } from 'vue-toastification'
 
 export interface FiltersProps {
    sortBy: string
@@ -22,10 +23,10 @@ export const useCurrentProjectStore = defineStore('currentProject', () => {
       } catch (error) {
          if (error instanceof Error) {
             console.error(error?.message)
-            alert(error?.message)
+            useToast().error(error?.message)
          } else {
             console.error('Unexpected error', error)
-            alert('An unexpected error occurred')
+            useToast().error('An unexpected error occurred')
          }
       }
    }
@@ -36,10 +37,10 @@ export const useCurrentProjectStore = defineStore('currentProject', () => {
       } catch (error) {
          if (error instanceof Error) {
             console.error(error?.message)
-            alert(error?.message)
+            useToast().error(error?.message)
          } else {
             console.error('Unexpected error', error)
-            alert('An unexpected error occurred')
+            useToast().error('An unexpected error occurred')
          }
       }
    }

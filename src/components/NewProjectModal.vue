@@ -5,7 +5,8 @@
    import CustomInput from './CustomInput.vue';
    import CustomTextArea from './CustomTextArea.vue';
    import { useProjectsStore } from '../stores/projects';
-
+   import { useToast } from 'vue-toastification'
+   
    const props = defineProps<{
       isOpen: boolean,
    }>()
@@ -55,12 +56,13 @@
             return
          } else {
             await createProject(data)
-            alert('Project created successfully')
+            useToast().success('Project created successfully')
             handleReset()
             emit('updateTable')
          }
       } catch (error) {
          console.error(error)
+         useToast().error('Something went wrong')
       }
    }
 
