@@ -12,6 +12,7 @@ export interface FiltersProps {
 
 export const useProjectsStore = defineStore('projects', () => {
    const projects = ref<ProjectProps[]>([])
+   const tasksQtts = ref([])
 
    const fetchAllProjects = async (sortBy: string, status?: string, search?: string) => {
       try {
@@ -28,6 +29,12 @@ export const useProjectsStore = defineStore('projects', () => {
          const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/projects`, { params })
 
          projects.value = data
+
+       if (!search && !status) {tasksQtts.value = [
+            data.reduce((acc, project) => acc + project.tasks.tasks_todo.length, 0),
+            data.reduce((acc, project) => acc + project.tasks.tasks_in_progress.length, 0),
+            data.reduce((acc, project) => acc + project.tasks.tasks_done.length, 0),
+         ]}
 
       } catch (error) {
          if (error instanceof Error) {
@@ -56,5 +63,5 @@ export const useProjectsStore = defineStore('projects', () => {
       }
    }
 
-   return { projects, fetchAllProjects, createProject }
+   return { projects, fetchAllProjects, createProject, tasksQtts }
 })

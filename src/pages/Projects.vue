@@ -89,6 +89,7 @@
       @sortBy="handleSortBy"
       :sortBy="sortBy"
    />
+   <TasksChart />
    <NewProjectModal
       :isOpen="isOpen"
       @toggleModal="toggleModal"
