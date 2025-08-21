@@ -32,6 +32,15 @@ export const useCurrentProjectStore = defineStore('currentProject', () => {
    }
    const changeProject = async (id: number, newProject: ProjectProps) => {
       try {
+
+         if (newProject.tasks.tasks_in_progress.length > 0){
+               newProject.status = 'in progress'
+            } else if (!newProject.tasks.tasks_todo.length && !newProject.tasks.tasks_in_progress.length) {
+               newProject.status = 'done'
+            } else if (!newProject.tasks.tasks_in_progress.length && !newProject.tasks.tasks_done.length) {
+               newProject.status = 'to do'
+            }
+
          const { data } = await axios.patch(`${import.meta.env.VITE_API_URL}/projects/${id}`, { ...newProject })
 
       } catch (error) {
