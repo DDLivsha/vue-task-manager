@@ -1,5 +1,5 @@
 <script setup lang="ts">
-   import { ref, watch } from 'vue';
+   import { ref, watch, onMounted } from 'vue';
    import { useProjectsStore } from '../stores/projects';
    import CustomInput from '../components/CustomInput.vue';
    import CustomSelect from '../components/CustomSelect.vue';
@@ -7,15 +7,21 @@
    import debounce from 'lodash/debounce';
    import { motion } from 'motion-v'
    import ProjectsTable from '../components/ProjectsTable.vue';
+   import { useRoute, useRouter } from 'vue-router';
+
+   //===============ROUTER==================
+   const router = useRouter();
+   const route = useRoute();
 
    //===============STORE==================
    const { fetchAllProjects } = useProjectsStore()
 
    //===============SEARCH SORT FILTER==================
-   const sortBy = ref('id')
-   const status = ref('')
-   const localSearch = ref('')
-   const search = ref('')
+   const sortBy = ref(String(route.query.sort || 'id'));
+   const status = ref(String(route.query.status || ''));
+   const localSearch = ref(String(route.query.search || ''));
+   const search = ref(localSearch.value);
+
    const isNeedUpdate = ref(false)
 
    const toggleUpdate = () => {
@@ -30,9 +36,25 @@
       sortBy.value = value
    }
 
-   watch([sortBy, status, search, isNeedUpdate], async () => {
-      await fetchAllProjects(sortBy.value, status.value, search.value);
-   }, { immediate: true });
+   watch(
+      [sortBy, status, search, isNeedUpdate],
+      async ([newSort, newStatus, newSearch, _]) => {
+         await router.replace({
+            query: {
+               sort: newSort,
+               status: newStatus || undefined,
+               search: newSearch || undefined,
+            },
+         });
+
+         await fetchAllProjects(newSort, newStatus, newSearch);
+      }
+   );
+
+   onMounted(() => {
+      fetchAllProjects(sortBy.value, status.value, search.value);
+   });
+
 
    //==============NEW PROJECT MODAL=====================
    const isOpen = ref(false)
@@ -63,7 +85,10 @@
          >New Project</motion.button>
       </div>
    </div>
-   <ProjectsTable @sortBy="handleSortBy" :sortBy="sortBy" />
+   <ProjectsTable
+      @sortBy="handleSortBy"
+      :sortBy="sortBy"
+   />
    <NewProjectModal
       :isOpen="isOpen"
       @toggleModal="toggleModal"
