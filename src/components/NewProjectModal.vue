@@ -78,41 +78,43 @@
       >
       </motion.div>
       <motion.div
+         class="modal__wrapper"
          :initial="{ opacity: 0 }"
          :animate="{ opacity: 1 }"
          :exit="{ opacity: 0 }"
          v-if="isOpen"
-         class="modal"
       >
-         <div class="modal__header">
-            <h2>Create New Project</h2>
-            <img
-               src="/close.svg"
-               alt="close modal"
-               @click="handleReset"
-               class="close-modal"
-            />
+         <div class="modal">
+            <div class="modal__header">
+               <h2>Create New Project</h2>
+               <img
+                  src="/close.svg"
+                  alt="close modal"
+                  @click="handleReset"
+                  class="close-modal"
+               />
+            </div>
+            <div class="flex">
+               <CustomInput
+                  v-model="data.title"
+                  placeholder="Title"
+                  :error="(isError && !data.title) ? 'You need to add a title' : ''"
+               />
+               <CustomTextArea
+                  v-model="data.description"
+                  placeholder="Description"
+               />
+               <motion.button
+                  type="button"
+                  class="btn"
+                  :whileHover="{ scale: 1.05 }"
+                  :whilePress="{ scale: 0.95 }"
+                  @click="handleCreateProject"
+               >Create Project</motion.button>
+            </div>
+            <div></div>
          </div>
-         <div class="flex">
-            <CustomInput
-               v-model="data.title"
-               placeholder="Title"
-               :error="(isError && !data.title) ? 'You need to add a title' : ''"
-            />
-            <CustomTextArea
-               v-model="data.description"
-               placeholder="Description"
-            />
-            <motion.button
-               type="button"
-               class="btn"
-               :whileHover="{ scale: 1.05 }"
-               :whilePress="{ scale: 0.95 }"
-               @click="handleCreateProject"
-            >Create Project</motion.button>
-         </div>
-         <div></div>
-      </motion.div>
+         </motion.div>
    </AnimatePresence>
 </template>
 

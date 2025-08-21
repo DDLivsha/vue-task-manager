@@ -104,54 +104,56 @@
       >
       </motion.div>
       <motion.div
+         class="modal__wrapper"
          :initial="{ opacity: 0 }"
          :animate="{ opacity: 1 }"
          :exit="{ opacity: 0 }"
          v-if="isOpen"
-         class="modal"
       >
-         <div class="modal__header">
-            <h2>Create New Task</h2>
-            <img
-               src="/close.svg"
-               alt="close modal"
-               @click="handleReset"
-               class="close-modal"
-            />
+         <div class="modal">
+            <div class="modal__header">
+               <h2>Create New Task</h2>
+               <img
+                  src="/close.svg"
+                  alt="close modal"
+                  @click="handleReset"
+                  class="close-modal"
+               />
+            </div>
+            <div class="flex">
+               <CustomInput
+                  v-model="data.title"
+                  placeholder="Title"
+                  :error="(isError && !data.title) ? 'You need to add a title' : ''"
+               />
+               <CustomSelect
+                  v-model="data.executor"
+                  :options="executors"
+                  placeholder="Select an executor"
+                  :error="(isError && !data.executor) ? 'You need to add an executor' : ''"
+               />
+               <CustomSelect
+                  v-model="data.status"
+                  :options="['to do', 'in progress', 'done']"
+                  placeholder="Select status"
+                  :error="(isError && !data.status) ? 'You need to add a status' : ''"
+               />
+               <CustomInput
+                  v-model="data.make_until"
+                  type="date"
+                  placeholder="Make until"
+                  :error="(isError && !data.make_until) ? 'You need to choose a date' : ''"
+               />
+               <motion.button
+                  type="button"
+                  class="btn"
+                  :whileHover="{ scale: 1.05 }"
+                  :whilePress="{ scale: 0.95 }"
+                  @click="handleCreateTask"
+               >Create Task</motion.button>
+            </div>
+            <div></div>
          </div>
-         <div class="flex">
-            <CustomInput
-               v-model="data.title"
-               placeholder="Title"
-               :error="(isError && !data.title) ? 'You need to add a title' : ''"
-            />
-            <CustomSelect
-               v-model="data.executor"
-               :options="executors"
-               placeholder="Select an executor"
-               :error="(isError && !data.executor) ? 'You need to add an executor' : ''"
-            />
-            <CustomSelect
-               v-model="data.status"
-               :options="['to do', 'in progress', 'done']"
-               placeholder="Select status"
-               :error="(isError && !data.status) ? 'You need to add a status' : ''"
-            />
-            <CustomInput
-               v-model="data.make_until"
-               type="date"
-               placeholder="Make until"
-               :error="(isError && !data.make_until) ? 'You need to choose a date' : ''"
-            />
-            <motion.button
-               type="button"
-               class="btn"
-               :whileHover="{ scale: 1.05 }"
-               :whilePress="{ scale: 0.95 }"
-               @click="handleCreateTask"
-            >Create Task</motion.button>
-         </div>
-         <div></div>
       </motion.div>
    </AnimatePresence>
 </template>

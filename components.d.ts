@@ -14,6 +14,7 @@ declare module 'vue' {
     CustomTextArea: typeof import('./src/components/CustomTextArea.vue')['default']
     NewProjectModal: typeof import('./src/components/NewProjectModal.vue')['default']
     NewTaskModal: typeof import('./src/components/NewTaskModal.vue')['default']
+    ProjectsTable: typeof import('./src/components/ProjectsTable.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SortButtons: typeof import('./src/components/SortButtons.vue')['default']

@@ -1,31 +1,15 @@
 <script setup lang="ts">
-   import { useRouter } from 'vue-router';
    import { ref, watch } from 'vue';
    import { useProjectsStore } from '../stores/projects';
-   import SortButtons from '../components/SortButtons.vue';
    import CustomInput from '../components/CustomInput.vue';
    import CustomSelect from '../components/CustomSelect.vue';
    import NewProjectModal from '../components/NewProjectModal.vue';
-   import { storeToRefs } from 'pinia'
    import debounce from 'lodash/debounce';
    import { motion } from 'motion-v'
-   import { format } from 'date-fns'
+   import ProjectsTable from '../components/ProjectsTable.vue';
 
    //===============STORE==================
-   const store = useProjectsStore()
-   const { projects } = storeToRefs(store)
    const { fetchAllProjects } = useProjectsStore()
-
-   //============ROUTER FOR OPEN PROJECT===============
-   const router = useRouter()
-
-   const handleClick = (event: MouseEvent, path: string) => {
-      if (event.ctrlKey || event.metaKey || event.button === 1) {
-         window.open(path, '_blank')
-         return
-      }
-      router.push(path)
-   }
 
    //===============SEARCH SORT FILTER==================
    const sortBy = ref('id')
@@ -79,126 +63,10 @@
          >New Project</motion.button>
       </div>
    </div>
-   <div class="table__block-overflow">
-      <table class="table__table">
-         <thead>
-            <tr>
-               <th class="relative">
-                  <div class='table__header'>Id
-                     <SortButtons
-                        :currentValue="sortBy"
-                        :ascValue="'id'"
-                        :descValue="'-id'"
-                        @change="handleSortBy"
-                     />
-                  </div>
-                  <img
-                     src="/arrows.png"
-                     alt="width arrows"
-                     width="18px"
-                     class="width__arrows"
-                  >
-               </th>
-               <th class="relative">
-                  <div class='table__header'>Project Title
-                     <SortButtons
-                        :currentValue="sortBy"
-                        :ascValue="'title'"
-                        :descValue="'-title'"
-                        @change="handleSortBy"
-                     />
-                  </div>
-                  <img
-                     src="/arrows.png"
-                     alt="width arrows"
-                     width="18px"
-                     class="width__arrows"
-                  >
-               </th>
-               <th class="relative">
-                  <div class='table__header'>Tasks Quantity
-                     <SortButtons
-                        :currentValue="sortBy"
-                        :ascValue="'tasks_quantity'"
-                        :descValue="'-tasks_quantity'"
-                        @change="handleSortBy"
-                     />
-                  </div>
-                  <img
-                     src="/arrows.png"
-                     alt="width arrows"
-                     width="18px"
-                     class="width__arrows"
-                  >
-               </th>
-               <th class="relative">
-                  <div class='table__header'>Status
-                     <SortButtons
-                        :currentValue="sortBy"
-                        :ascValue="'status'"
-                        :descValue="'-status'"
-                        @change="handleSortBy"
-                     />
-                  </div>
-                  <img
-                     src="/arrows.png"
-                     alt="width arrows"
-                     width="18px"
-                     class="width__arrows"
-                  >
-               </th>
-               <th>
-                  <div class='table__header'>Created At</div>
-               </th>
-            </tr>
-         </thead>
-         <tbody>
-            <tr
-               v-for="item in projects"
-               :key="item.id"
-               v-if="projects.length"
-               @click.prevent="handleClick($event, '/' + item.id)"
-            >
-               <td>
-                  {{ item.id }}
-               </td>
-               <td>
-                  {{ item.title }}
-               </td>
-               <td>
-                  {{ item.tasks_quantity }}
-               </td>
-               <td class='table__status'>
-                  {{ item.status }}
-               </td>
-               <td class='table__status'>
-                  {{ format(new Date(item.created_at), 'dd.MM.yyyy') }}
-               </td>
-            </tr>
-         </tbody>
-      </table>
-      <div
-         v-if="!projects.length"
-         class="table__no-data"
-      >No data available.</div>
-   </div>
+   <ProjectsTable @sortBy="handleSortBy" :sortBy="sortBy" />
    <NewProjectModal
       :isOpen="isOpen"
       @toggleModal="toggleModal"
       @updateTable="toggleUpdate"
    />
 </template>
-
-<style scoped lang="scss">
-   .relative {
-      position: relative;
-   }
-
-   .width__arrows {
-      position: absolute;
-      top: 17px;
-      right: -9px;
-      cursor: pointer;
-      z-index: 10;
-   }
-</style>

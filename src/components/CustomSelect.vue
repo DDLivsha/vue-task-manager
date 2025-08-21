@@ -130,7 +130,7 @@
          border-radius: 6px;
          max-height: 150px;
          overflow-y: auto;
-         z-index: 10;
+         z-index: 100;
       }
 
       &__option {
