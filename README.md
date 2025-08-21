@@ -1,33 +1,62 @@
-# vue-task-manager
+Tasks Manager
 
-This template should help get you started developing with Vue 3 in Vite.
+Опис
+Tasks Manager — це ефективний і простий інструмент для керування проєктами та завданнями. Він дозволяє користувачам створювати проєкти, додавати до них завдання та відстежувати їхній статус. Завдання можна легко переміщувати між трьома основними категоріями: To Do, In Progress та Done.
 
-## Recommended IDE Setup
+Основні функції:
+Створення та керування проєктами: Швидке додавання та редагування проєктів.
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+Організація завдань: Розбиття робочого процесу на три чіткі етапи.
 
-## Type Support for `.vue` Imports in TS
+Призначення відповідальних: Можливість вказати виконавця для кожного завдання.
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+Встановлення термінів: Задавання дедлайнів для завдань.
 
-## Customize configuration
+Фільтрація та сортування: Зручний пошук проєктів за назвою, статусом або іншими критеріями.
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+Візуалізація прогресу: Інформативний графік для відстеження загальної кількості завдань за статусом.
 
-## Project Setup
+Використані технології
+Цей проєкт розроблено з використанням сучасного стеку технологій для створення швидких та реактивних веб-додатків:
 
-```sh
+Фреймворк: Vue.js 3
+
+Сховище стану: Pinia
+
+Маршрутизація: Vue Router
+
+HTTP-клієнт: Axios
+
+Візуалізація даних: Chart.js, vue-chart-3
+
+Drag & Drop: Vuedraggable
+
+Стилізація: SCSS
+
+Інше: Lodash, date-fns, motion-v
+
+Інструкція із запуску
+Щоб запустити проєкт локально, виконайте наступні кроки.
+
+1. Передумови
+Переконайтеся, що на вашому комп'ютері встановлено Node.js (рекомендовані версії: ^20.19.0 або ^22.12.0).
+
+2. Клонування репозиторію
+git clone https://github.com/DDLivsha/vue-task-manager
+
+cd tasks-manager
+
+3. Встановлення залежностей
+Використайте npm для встановлення всіх необхідних пакетів.
+
 npm install
-```
 
-### Compile and Hot-Reload for Development
+4. Конфігурація API
+Конфігурація і створення .env не потрібні, я залишив свій файл .env, який вже повністю готовий для запуску.
 
-```sh
+5. Запуск застосунку
+Виконайте команду для запуску в режимі розробки.
+
 npm run dev
-```
 
-### Type-Check, Compile and Minify for Production
-
-```sh
-npm run build
-```
+Після цього застосунок буде доступний за адресою http://localhost:5173.
