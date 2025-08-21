@@ -83,7 +83,7 @@
       <table class="table__table">
          <thead>
             <tr>
-               <th>
+               <th class="relative">
                   <div class='table__header'>Id
                      <SortButtons
                         :currentValue="sortBy"
@@ -92,8 +92,14 @@
                         @change="handleSortBy"
                      />
                   </div>
+                  <img
+                     src="/arrows.png"
+                     alt="width arrows"
+                     width="18px"
+                     class="width__arrows"
+                  >
                </th>
-               <th>
+               <th class="relative">
                   <div class='table__header'>Project Title
                      <SortButtons
                         :currentValue="sortBy"
@@ -102,8 +108,14 @@
                         @change="handleSortBy"
                      />
                   </div>
+                  <img
+                     src="/arrows.png"
+                     alt="width arrows"
+                     width="18px"
+                     class="width__arrows"
+                  >
                </th>
-               <th>
+               <th class="relative">
                   <div class='table__header'>Tasks Quantity
                      <SortButtons
                         :currentValue="sortBy"
@@ -112,8 +124,14 @@
                         @change="handleSortBy"
                      />
                   </div>
+                  <img
+                     src="/arrows.png"
+                     alt="width arrows"
+                     width="18px"
+                     class="width__arrows"
+                  >
                </th>
-               <th>
+               <th class="relative">
                   <div class='table__header'>Status
                      <SortButtons
                         :currentValue="sortBy"
@@ -122,6 +140,12 @@
                         @change="handleSortBy"
                      />
                   </div>
+                  <img
+                     src="/arrows.png"
+                     alt="width arrows"
+                     width="18px"
+                     class="width__arrows"
+                  >
                </th>
                <th>
                   <div class='table__header'>Created At</div>
@@ -164,3 +188,17 @@
       @updateTable="toggleUpdate"
    />
 </template>
+
+<style scoped lang="scss">
+   .relative {
+      position: relative;
+   }
+
+   .width__arrows {
+      position: absolute;
+      top: 17px;
+      right: -9px;
+      cursor: pointer;
+      z-index: 10;
+   }
+</style>
